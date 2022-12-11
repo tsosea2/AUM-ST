@@ -1,1 +1,1 @@
-The code will pe updated soon.
+The code will be updated soon.
