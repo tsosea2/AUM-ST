@@ -35,7 +35,7 @@ To install all dependencies please run:
 
 Unfortunately, we cannot upload the datasets used in the paper. However these can easily be downloaded from their sources and put in the correct format.
 
-SST-2, SST-5 
+SST-2, SST-5 -> [https://nlp.stanford.edu/sentiment/](https://nlp.stanford.edu/sentiment/)
 
 ## Augmentation
 
