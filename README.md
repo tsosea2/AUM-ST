@@ -23,4 +23,4 @@ The effectiveness of pre-trained language models in downstream tasks is highly d
 
 ## Overview
 
-AUM-ST can be divided into two main steps: ```Augmentation``` and ```SSL Training```. 
+AUM-ST can be divided into two main steps: ```Augmentation``` and ```SSL Training```. Due to high computational costs of augmentations such as Backtranslation, we resort to generating the needed augmentations offline, before starting to train. As mentioned in the paper, we use transformations such as synonym replacement, switchout, and backtranslations with various chain lengths.
