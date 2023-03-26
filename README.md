@@ -1,6 +1,6 @@
 # AUM-ST
 
-This is the code for our EMNLP Findings 2022 paper [Leveraging Training Dynamics and Self-Training for Text Classification]([https://www.aclweb.org/anthology/2020.emnlp-main.715/](https://aclanthology.org/2022.findings-emnlp.350/)). If you use this repository in your research, please cite our paper:
+This is the code for our EMNLP Findings 2022 paper entitled [Leveraging Training Dynamics and Self-Training for Text Classification]([https://www.aclweb.org/anthology/2020.emnlp-main.715/](https://aclanthology.org/2022.findings-emnlp.350/)). If you use this repository in your research, please cite our paper:
 
 ```bibtex
 @inproceedings{sosea-caragea-2022-leveraging,
