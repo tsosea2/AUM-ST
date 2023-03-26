@@ -53,7 +53,7 @@ Each augmentation in `AUGDIR` will follow the same `.csv` format described above
 
 ### Strength explanation.
 
-This paper is based on three main augmentations: synonym replacement, switchout and backtranslation. Each augmentation has a strength associated with it. Each synonym replacement has a strength of $1$, deletion has a strength of $1$ for each $0.05$ probability, while each backtranslation intermediate language has a strength of $3$. For instance, if we perform $1$ synonym replacement, set a switchout probability of $0.1$ and use $3$ intermediate languages for backtranslation (i.e., chain length of $4$), the resulted augmentation has a strength of $1$(synonym replacement) + $2$ (switchout) + $3x3$ (backtranslation) = $12$. 
+This paper is based on three main augmentations: synonym replacement, switchout and backtranslation. Each augmentation has a strength associated with it. Each synonym replacement has a strength of $1$, deletion has a strength of $1$ for each $0.05$ probability, while each backtranslation intermediate language has a strength of $3$. For instance, if we perform $1$ synonym replacement, set a switchout probability of $0.1$ and use $3$ intermediate languages for backtranslation (i.e., chain length of $4$), the resulted augmentation has a strength of $1$(synonym replacement) + $2$ (switchout) + $3\*3$ (backtranslation) = $12$. 
 
 ## AUM-ST
 
