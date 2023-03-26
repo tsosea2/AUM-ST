@@ -25,6 +25,12 @@ The effectiveness of pre-trained language models in downstream tasks is highly d
 
 AUM-ST can be divided into two main steps: ```Augmentation``` and ```SSL Training```. Due to high computational costs of augmentations such as Backtranslation, we resort to generating the needed augmentations offline, before starting to train. As mentioned in the paper, we use transformations such as synonym replacement, switchout, and backtranslations with various chain lengths.
 
+## Dependencies
+
+To install all dependencies please run:
+
+```pip install -r requirements.txt```
+
 ## Augmentation
 
 ### Data Format
@@ -53,9 +59,17 @@ Each augmentation in `AUGDIR` will follow the same `.csv` format described above
 
 ### Strength explanation.
 
-This paper is based on three main augmentations: synonym replacement, switchout and backtranslation. Each augmentation has a strength associated with it. Each synonym replacement has a strength of $1$, deletion has a strength of $1$ for each $0.05$ probability, while each backtranslation intermediate language has a strength of $3$. For instance, if we perform $1$ synonym replacement, set a switchout probability of $0.1$ and use $3$ intermediate languages for backtranslation (i.e., chain length of $4$), the resulted augmentation has a strength of $1$(synonym replacement) + $2$ (switchout) + $3\*3$ (backtranslation) = $12$. 
+This paper is based on three main augmentations: synonym replacement, switchout and backtranslation. Each augmentation has a strength associated with it. Each synonym replacement has a strength of $1$, deletion has a strength of $1$ for each $0.05$ probability, while each backtranslation intermediate language has a strength of $3$. For instance, if we perform $1$ synonym replacement, set a switchout probability of $0.1$ and use $3$ intermediate languages for backtranslation (i.e., chain length of $4$), the resulted augmentation has a strength of $1$(synonym replacement) + $2$ (switchout) + $3\*3$ (backtranslation) = $12$. These strength values can be used to define what weak or strong data augmnetation represents in AUM-ST. 
 
 ## AUM-ST
 
-The previous section discussed the augmentation process. At this stage, we assume we have the augmentations generated in the `AUGDIR` directory. We also assume the validation and the test set follow the same format as the training set (i.e., `.csv` file with `Id`, `Text`, and `Label` columns).
+The previous section discussed the augmentation process. At this stage, we assume we have the augmentations generated in the `AUGDIR` directory. We also assume the validation and the test set follow the same format as the training set (i.e., `.csv` file with `Id`, `Text`, and `Label` columns). To train using AUM-ST run:
+
+```python AUM-ST/aum-st.py  --initial_num 3 --experiment_id <experiment_id> --intermediate_model_path <intermediate_model_path> --num_labels <num_labels> --augmentation_dir <aug_dir> --validation_path <path_to_validation.csv> --test_path <path_to_test_set.csv> --tensorboard_dir <path_to_tensorboard> --aum_save_dir <path_to_aum_savedir>```
+
+Details of each flag can be seen by first running:
+
+```python AUM-ST/aum-st.py --helpfull```
+
+
 
