@@ -15,7 +15,6 @@ This is the code for our Findings of EMNLP 2022 paper entitled [Leveraging Train
     url = "https://aclanthology.org/2022.findings-emnlp.350",
     pages = "4750--4762",
 }
-}
 ```
 ## Abstract
 
