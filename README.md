@@ -37,4 +37,10 @@ The input data for the augmentation stage is a csv file containing the training 
 
 ```Label``` - the label of the example as an integer. For instance, for a dataset with `N` classes, the Label has to be a number from $0$ to $N-1$.
 
-To replicate the exact augmentations in the paper, first fill out the `AUGDIR` and `INPUTDATASET` variables in `Augment/generate_augmentations.sh`. `AUGDIR` is the directory where the augmentations will be saved while `INPUTDATASET` is the path to `.csv` file defined above. Next, run the augmentation script `sh Augment/generate_augmentations.sh`. Please note that backtranslation is computationally expensive. Therefore, if multiple GPUs are available, consider running the strong augmentations in parallel on multiple GPUs.
+To replicate the exact augmentations in the paper, first fill out the `AUGDIR` and `INPUTDATASET` variables in `Augment/generate_augmentations.sh`. `AUGDIR` is the directory where the augmentations will be saved while `INPUTDATASET` is the path to `.csv` file defined above. Next, generate the augmentations by running
+
+`sh Augment/generate_augmentations.sh`
+
+While augmentation is a one-time process, please note that backtranslations are computationally expensive. Therefore, if multiple GPUs are available, consider running the strong augmentations in parallel on multiple GPUs.
+
+The augmentation script generates a large amount of augmented versions of the training set, replicated multiple times, in order to mimic the stochastic process usually used in augmentations. For each configuration defined in `Augment/generate_augmentations.sh` we replicate the augmentations for a number of $50$ times through the `--num_replicated_augmentations` flag. To save time and resources, this number can be lowered, however, please note that the results in the paper use $50$ replicas.
