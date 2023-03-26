@@ -74,7 +74,7 @@ The augmentation script generates a large amount of augmented versions of the tr
 
 Each augmentation in `AUGDIR` will follow the same `.csv` format described above. In addition, the script adds a extra column named `Strength` which indicates the amount of distorsion produced by the augmentation (i.e., higher strengths correspond to more backtranslation chain lengths while lower strenghts mean fewer chains). These values can be used in AUM-ST to define weak and strong augmentations.
 
-### Strength explanation.
+### Strength explanation
 
 This paper is based on three main augmentations: synonym replacement, switchout and backtranslation. Each augmentation has a strength associated with it. Each synonym replacement has a strength of $1$, deletion has a strength of $1$ for each $0.05$ probability, while each backtranslation intermediate language has a strength of $3$. For instance, if we perform $1$ synonym replacement, set a switchout probability of $0.1$ and use $3$ intermediate languages for backtranslation (i.e., chain length of $4$), the resulted augmentation has a strength of $1$(synonym replacement) + $2$ (switchout) + $3\*3$ (backtranslation) = $12$. These strength values can be used to define what weak or strong data augmnetation represents in AUM-ST. 
 
