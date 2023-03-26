@@ -30,5 +30,7 @@ AUM-ST can be divided into two main steps: ```Augmentation``` and ```SSL Trainin
 The input data has to be representated in a csv file with three columns: 
 
 ```Id``` - unique ID
-```Text```
+
+```Text``` - the input text
+
 ```Label``` - the label of the example as an integer. For instance, for a dataset with `N` classes, the Label has to be a number from $0$ to $N-1$.
