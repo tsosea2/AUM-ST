@@ -71,6 +71,12 @@ There exist numerous other flags that are set to the default value used in the p
 
 ```python AUM-ST/aum-st.py --helpfull```
 
+## Monitoring
+
+All metrics are logged during training using tensorboard. To monitor these, please run 
+
+```tensorboard --logdir .````
+
 ## Help
 
 If you have any questions or need help running the code, please create an issue in this repository.
