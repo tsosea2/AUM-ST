@@ -75,7 +75,7 @@ There exist numerous other flags that are set to the default value used in the p
 
 All metrics are logged during training using tensorboard. To monitor these, please run 
 
-```tensorboard --logdir .````
+```tensorboard --logdir .```
 
 ## Help
 
