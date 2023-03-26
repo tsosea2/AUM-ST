@@ -37,6 +37,17 @@ Unfortunately, we cannot upload the datasets used in the paper. However these ca
 
 SST-2, SST-5 -> [https://nlp.stanford.edu/sentiment/](https://nlp.stanford.edu/sentiment/)
 
+CancerEmo -> [https://github.com/tsosea2/CancerEmo](https://github.com/tsosea2/CancerEmo)
+
+GoEmotions -> [https://github.com/google-research/google-research/tree/master/goemotions](https://github.com/google-research/google-research/tree/master/goemotions)
+
+TREC-6 -> [https://www.kaggle.com/datasets/thedevastator/the-trec-question-classification-dataset-a-longi](https://www.kaggle.com/datasets/thedevastator/the-trec-question-classification-dataset-a-longi)
+
+COLA -> [https://nyu-mll.github.io/CoLA/](https://nyu-mll.github.io/CoLA/)
+
+IMDB -> [https://ai.stanford.edu/~amaas/data/sentiment/](https://ai.stanford.edu/~amaas/data/sentiment/)
+
+
 ## Augmentation
 
 ### Data Format
