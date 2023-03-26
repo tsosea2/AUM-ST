@@ -36,3 +36,5 @@ The input data for the augmentation stage is a csv file containing the training 
 ```Text``` - the input text
 
 ```Label``` - the label of the example as an integer. For instance, for a dataset with `N` classes, the Label has to be a number from $0$ to $N-1$.
+
+To replicate the exact augmentations in the paper, first fill out the `AUGDIR` and `INPUTDATASET` variables in `Augment/generate_augmentations.sh`. `AUGDIR` is the directory where the augmentations will be saved while `INPUTDATASET` is the path to `.csv` file defined above. Next, run the augmentation script `sh Augment/generate_augmentations.sh`. Please note that backtranslation is computationally expensive. Therefore, if multiple GPUs are available, consider running the strong augmentations in parallel on multiple GPUs.
