@@ -25,9 +25,9 @@ The effectiveness of pre-trained language models in downstream tasks is highly d
 
 AUM-ST can be divided into two main steps: ```Augmentation``` and ```SSL Training```. Due to high computational costs of augmentations such as Backtranslation, we resort to generating the needed augmentations offline, before starting to train. As mentioned in the paper, we use transformations such as synonym replacement, switchout, and backtranslations with various chain lengths.
 
-## Data Format
+## Augmentation
 
-### Augmentation
+### Data Format
 
 The input data for the augmentation stage is a csv file containing the training set with three columns: 
 
@@ -37,10 +37,25 @@ The input data for the augmentation stage is a csv file containing the training 
 
 ```Label``` - the label of the example as an integer. For instance, for a dataset with `N` classes, the Label has to be a number from $0$ to $N-1$.
 
+### Augmenting the training set.
+
 To replicate the exact augmentations in the paper, first fill out the `AUGDIR` and `INPUTDATASET` variables in `Augment/generate_augmentations.sh`. `AUGDIR` is the directory where the augmentations will be saved while `INPUTDATASET` is the path to `.csv` file defined above. Next, generate the augmentations by running
 
 `sh Augment/generate_augmentations.sh`
 
 While augmentation is a one-time process, please note that backtranslations are computationally expensive. Therefore, if multiple GPUs are available, consider running the strong augmentations in parallel on multiple GPUs.
 
+### Output of the augmentation
+
 The augmentation script generates a large amount of augmented versions of the training set, replicated multiple times, in order to mimic the stochastic process usually used in augmentations. For each configuration defined in `Augment/generate_augmentations.sh` we replicate the augmentations for a number of $50$ times through the `--num_replicated_augmentations` flag. To save time and resources, this number can be lowered, however, please note that the results in the paper use $50$ replicas.
+
+Each augmentation in `AUGDIR` will follow the same `.csv` format described above. In addition, the script adds a extra column named `Strength` which indicates the amount of distorsion produced by the augmentation (i.e., higher strengths correspond to more backtranslation chain lengths while lower strenghts mean fewer chains). These values can be used in AUM-ST to define weak and strong augmentations.
+
+### Strength explanation.
+
+This paper is based on three main augmentations: synonym replacement, switchout and backtranslation. Each augmentation has a strength associated with it. Each synonym replacement has a strength of $1$, deletion has a strength of $1$ for each $0.05$ probability, while each backtranslation intermediate language has a strength of $3$. For instance, if we perform $1$ synonym replacement, set a switchout probability of $0.1$ and use $3$ intermediate languages for backtranslation (i.e., chain length of $4$), the resulted augmentation has a strength of $1$(synonym replacement) + $2$ (switchout) + $3x3$ (backtranslation) = $12$. 
+
+## AUM-ST
+
+The previous section discussed the augmentation process. At this stage, we assume we have the augmentations generated in the `AUGDIR` directory. We also assume the validation and the test set follow the same format as the training set (i.e., `.csv` file with `Id`, `Text`, and `Label` columns).
+
