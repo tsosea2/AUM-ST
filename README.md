@@ -71,5 +71,8 @@ Additional details of each flag can be seen by first running:
 
 ```python AUM-ST/aum-st.py --helpfull```
 
+## Help
+
+If you have any questions or need help running the code, please create an issue in this repository.
 
 
