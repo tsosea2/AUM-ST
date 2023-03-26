@@ -67,7 +67,7 @@ The previous section discussed the augmentation process. At this stage, we assum
 
 ```python AUM-ST/aum-st.py --experiment_id <experiment_id> --intermediate_model_path <intermediate_model_path> --num_labels <num_labels> --augmentation_dir <aug_dir> --validation_path <path_to_validation.csv> --test_path <path_to_test_set.csv> --tensorboard_dir <path_to_tensorboard> --aum_save_dir <path_to_aum_savedir>```
 
-Additional details of each flag can be seen by first running:
+There exist numerous other flags that are set to the default value used in the paper. If you want to change any parameters, please see in-depth details of each flag by running:
 
 ```python AUM-ST/aum-st.py --helpfull```
 
