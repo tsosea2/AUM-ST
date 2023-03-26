@@ -24,3 +24,11 @@ The effectiveness of pre-trained language models in downstream tasks is highly d
 ## Overview
 
 AUM-ST can be divided into two main steps: ```Augmentation``` and ```SSL Training```. Due to high computational costs of augmentations such as Backtranslation, we resort to generating the needed augmentations offline, before starting to train. As mentioned in the paper, we use transformations such as synonym replacement, switchout, and backtranslations with various chain lengths.
+
+## Data Format
+
+The input data has to be representated in a csv file with three columns: 
+
+```Id``` - unique ID
+```Text```
+```Label``` - the label of the example as an integer. For instance, for a dataset with `N` classes, the Label has to be a number from $0$ to $N-1$.
