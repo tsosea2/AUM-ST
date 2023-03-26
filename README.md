@@ -27,7 +27,9 @@ AUM-ST can be divided into two main steps: ```Augmentation``` and ```SSL Trainin
 
 ## Data Format
 
-The input data has to be representated in a csv file with three columns: 
+### Augmentation
+
+The input data for the augmentation stage is a csv file containing the training set with three columns: 
 
 ```Id``` - unique ID
 
