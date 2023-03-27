@@ -169,8 +169,7 @@ def main(argv):
         # Eliminate low-aum examples.
         assert pseudo_labels_dict != None
         threshold_pseudo_labels_dict = deepcopy(pseudo_labels_dict)
-        threshold_examples = set(random.sample(
-            pseudo_labels_dict.keys(), len(pseudo_labels_dict) // 6))
+        threshold_examples = set(random.sample(pseudo_labels_dict.keys(), min(len(pseudo_labels_dict) / FLAGS.num_classes, len(pseudo_labels_dict) // 4)))
         print('Selected', len(threshold_examples), 'threshold examples.')
         for e in threshold_examples:
             threshold_pseudo_labels_dict[e] = FLAGS.num_classes
