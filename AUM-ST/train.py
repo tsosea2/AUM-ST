@@ -146,10 +146,14 @@ def train_ssl(FLAGS, best_f1_overall, train_dataset, strong_unlabeled_dict, labe
         strong_unlabeled_dict, labels_unlabeled, ind, tokenizer, threshold_pseudo_labels_dict)
 
     unlabeled_strong_dataloader = torch.utils.data.DataLoader(
-        strongly_augmented_unlabeled_dataset, batch_size=FLAGS.unsup_batch_size, shuffle=True)
+        strongly_augmented_unlabeled_dataset, batch_size=FLAGS.unsup_batch_size, shuffle=True, drop_last=True)
 
-    model = AutoModelForSequenceClassification.from_pretrained(
-        FLAGS.pt_teacher_checkpoint, num_labels=FLAGS.num_classes + 1)
+    if use_aum:
+        model = AutoModelForSequenceClassification.from_pretrained(
+            FLAGS.pt_teacher_checkpoint, num_labels=FLAGS.num_classes + 1)
+    else:
+        model = AutoModelForSequenceClassification.from_pretrained(
+            FLAGS.pt_teacher_checkpoint, num_labels=FLAGS.num_classes)
 
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=5e-05)
@@ -189,10 +193,9 @@ def train_ssl(FLAGS, best_f1_overall, train_dataset, strong_unlabeled_dict, labe
             logits_lbls = logits.logits[:num_lb]
             logits_ulbl = logits.logits[num_lb:]
 
-            print(
-                logits_ulbl, cuda_tensors_unsupervised['lbl'], data_unsupervised['idx'].numpy())
-            aum_calculator.update(
-                logits_ulbl, cuda_tensors_unsupervised['lbl'], data_unsupervised['idx'].numpy())
+            if use_aum:
+                aum_calculator.update(
+                    logits_ulbl.detach(), cuda_tensors_unsupervised['lbl'], data_unsupervised['idx'].numpy())
 
             loss_sup = loss_fn_supervised(
                 logits_lbls, cuda_tensors_supervised['lbl'])
@@ -202,31 +205,35 @@ def train_ssl(FLAGS, best_f1_overall, train_dataset, strong_unlabeled_dict, labe
             loss.backward()
             optimizer.step()
 
-        loss_fn = torch.nn.CrossEntropyLoss(reduction='mean')
-        f1_macro_test, loss_test = evaluate(
-            model, test_dataloader, loss_fn, FLAGS.inference_batch_size)
-        f1_macro_validation, loss_validation = evaluate(
-            model, validation_dataloader, loss_fn, FLAGS.inference_batch_size)
+        if not use_aum:
+            loss_fn = torch.nn.CrossEntropyLoss(reduction='mean')
+            f1_macro_test, loss_test = evaluate(
+                model, test_dataloader, loss_fn, FLAGS.inference_batch_size)
+            f1_macro_validation, loss_validation = evaluate(
+                model, validation_dataloader, loss_fn, FLAGS.inference_batch_size)
 
-        if f1_macro_validation >= best_f1:
-            crt_patience = 0
-            best_f1 = f1_macro_validation
-            corresponding_test = f1_macro_test
-            best_loss_validation = loss_validation
-            best_loss_test = loss_test
+            if f1_macro_validation >= best_f1:
+                crt_patience = 0
+                best_f1 = f1_macro_validation
+                corresponding_test = f1_macro_test
+                best_loss_validation = loss_validation
+                best_loss_test = loss_test
 
-            if best_f1 > best_f1_overall:
-                model.save_pretrained(FLAGS.intermediate_model_path)
-                best_f1_overall = best_f1
-            print('New best macro validation', best_f1, 'Epoch', epoch)
-            continue
+                if best_f1 > best_f1_overall:
+                    model.save_pretrained(FLAGS.intermediate_model_path)
+                    best_f1_overall = best_f1
+                print('New best macro validation', best_f1, 'Epoch', epoch)
+                continue
 
-        if crt_patience == FLAGS.unsupervised_patience:
-            crt_patience = 0
-            print('Exceeding max patience; Exiting..')
-            break
+            if crt_patience == FLAGS.unsupervised_patience:
+                crt_patience = 0
+                print('Exceeding max patience; Exiting..')
+                break
 
         crt_patience += 1
+
+    if not use_aum:
+        return best_f1_overall, best_f1, corresponding_test, best_loss_validation, best_loss_test
 
 
 def evaluate(model, test_dataloader, criterion, batch_size):
