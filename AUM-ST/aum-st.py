@@ -58,8 +58,6 @@ flags.DEFINE_string("augmentation_dir",
                     "...", "Directory that contains the output of the augmentation script.")
 
 flags.DEFINE_string(
-    "train_path", "...", "Path to the training set csv file.")
-flags.DEFINE_string(
     "validation_path", "...", "Path to the validation set csv file.")
 flags.DEFINE_string(
     "test_path", "...", "Path to test set csv file.")
